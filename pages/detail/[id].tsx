@@ -27,6 +27,11 @@ const Deatil = ({ postDetails }: IProps) => {
     const { userProfile }: any = useAuthStore()
     const [comment, setComment] = useState('')
     const [isPostingComment, setIsPostingComment] = useState(false)
+    useEffect(() => {
+        if (post && videoRef?.current) {
+            videoRef.current.muted = isVideoMuted
+        }
+    }, [post, isVideoMuted])
     const handleLike = async (like: boolean) => {
         if (userProfile) {
             const { data } = await axios.put(`${BASE_URL}/api/like`, {
@@ -67,11 +72,7 @@ const Deatil = ({ postDetails }: IProps) => {
 
     if (!post) return null;
 
-    useEffect(() => {
-        if (post && videoRef?.current) {
-            videoRef.current.muted = isVideoMuted
-        }
-    }, [post, isVideoMuted])
+
 
 
     return (
